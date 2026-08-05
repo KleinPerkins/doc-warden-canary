@@ -11,6 +11,7 @@ after acceptance, not even a status-bullet edit. Supersession is recorded only v
 
 | ADR | Title | Status | Date |
 |---|---|---|---|
+| [0001-canary-architecture-choice-v1.md](0001-canary-architecture-choice-v1.md) | DRAFT | 2026-08-05 | |
 | <!-- TODO: doc-warden will populate rows here via repair --> | | | |
 
 ## Conventions
