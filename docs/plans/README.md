@@ -11,6 +11,7 @@ version is never modified.
 
 | Plan | Status | Date | Notes |
 |---|---|---|---|
+| [canary-poc-plan-v1.md](canary-poc-plan-v1.md) | DRAFT | 2026-08-05 | |
 | <!-- TODO: doc-warden will populate rows here via repair --> | | | |
 
 ## Conventions
