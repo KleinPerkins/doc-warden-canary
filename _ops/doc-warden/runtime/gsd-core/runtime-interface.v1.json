@@ -1,0 +1,65 @@
+{
+  "schema": "doc-warden/gsd-runtime-interface/v1",
+  "package": "@opengsd/gsd-core",
+  "version": "1.11.0",
+  "git_commit": "182f60b4c170785d96f1deb87fea8b108e9b985f",
+  "supported_scope": "authoring_context_only",
+  "host_skills": [
+    {
+      "id": "gsd-new-project",
+      "arguments": "[--auto]",
+      "result_artifacts": [
+        ".planning/PROJECT.md",
+        ".planning/config.json",
+        ".planning/REQUIREMENTS.md",
+        ".planning/ROADMAP.md",
+        ".planning/STATE.md"
+      ]
+    },
+    {
+      "id": "gsd-discuss-phase",
+      "arguments": "[phase] [--auto]",
+      "result_artifacts": [
+        ".planning/phases/<phase>/*-CONTEXT.md"
+      ]
+    },
+    {
+      "id": "gsd-plan-phase",
+      "arguments": "[phase] [--auto|--research|--skip-research|--prd <file>|--ingest <path-or-glob>]",
+      "result_artifacts": [
+        ".planning/phases/<phase>/*-PLAN.md"
+      ]
+    },
+    {
+      "id": "gsd-validate-phase",
+      "arguments": "[phase]",
+      "result_artifacts": [
+        ".planning/phases/<phase>/*-VALIDATION.md"
+      ]
+    }
+  ],
+  "deterministic_utilities": [
+    {
+      "command": "gsd-tools",
+      "purpose": "parse and inspect planning artifacts only"
+    },
+    {
+      "command": "gsd-core",
+      "purpose": "package-owned install and check interface"
+    }
+  ],
+  "native_discovery": {
+    "package_skills": "node_modules/@opengsd/gsd-core/skills/<skill-id>/SKILL.md",
+    "package_commands": "node_modules/@opengsd/gsd-core/commands/gsd/<command>.md",
+    "installed_skills": "${HOME}/.cursor/skills/<skill-id>/SKILL.md"
+  },
+  "excluded_workflows": [
+    "gsd-autonomous",
+    "gsd-execute-phase",
+    "gsd-ship",
+    "gsd-resume-work"
+  ],
+  "excluded_commands": [
+    "gsd_run"
+  ]
+}

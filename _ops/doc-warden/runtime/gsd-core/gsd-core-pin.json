@@ -1,0 +1,63 @@
+{
+  "schema": "doc-warden/gsd-core-pin/v1",
+  "package": "@opengsd/gsd-core",
+  "version": "1.11.0",
+  "git_commit": "182f60b4c170785d96f1deb87fea8b108e9b985f",
+  "npm_integrity": "sha512-z1RLWsQshYViJIk94SB0x9/AYPykj5LIuLxwjS0s+WgaCBgVtTknCsVR3x4itrBeqmiUEvGiN6cO/bOay0zOiQ==",
+  "license": {
+    "spdx": "MIT",
+    "copyright": "Copyright (c) 2026 Open GSD",
+    "url": "https://github.com/open-gsd/gsd-core/blob/182f60b4c170785d96f1deb87fea8b108e9b985f/LICENSE"
+  },
+  "node_min": "24.0.0",
+  "npm_min": "10.0.0",
+  "runtime_defaults": {
+    "workflow.use_worktrees": false,
+    "git.branching_strategy": "none",
+    "git.create_tag": false
+  },
+  "authoring_interfaces": {
+    "new_project": {
+      "skill_id": "gsd-new-project",
+      "arguments": "[--auto]",
+      "outputs": [
+        ".planning/PROJECT.md",
+        ".planning/config.json",
+        ".planning/REQUIREMENTS.md",
+        ".planning/ROADMAP.md",
+        ".planning/STATE.md"
+      ]
+    },
+    "discuss_phase": {
+      "skill_id": "gsd-discuss-phase",
+      "arguments": "[phase] [--auto]",
+      "outputs": [
+        ".planning/phases/<phase>/*-CONTEXT.md"
+      ]
+    },
+    "plan_phase": {
+      "skill_id": "gsd-plan-phase",
+      "arguments": "[phase] [authoring flags]",
+      "outputs": [
+        ".planning/phases/<phase>/*-PLAN.md"
+      ]
+    },
+    "validate_phase": {
+      "skill_id": "gsd-validate-phase",
+      "arguments": "[phase]",
+      "outputs": [
+        ".planning/phases/<phase>/*-VALIDATION.md"
+      ]
+    }
+  },
+  "prohibited_interfaces": [
+    "gsd-autonomous",
+    "gsd-execute-phase",
+    "gsd-ship",
+    "gsd_run"
+  ],
+  "upstream": {
+    "repository": "https://github.com/open-gsd/gsd-core",
+    "tarball": "https://registry.npmjs.org/@opengsd/gsd-core/-/gsd-core-1.11.0.tgz"
+  }
+}
