@@ -664,6 +664,7 @@ def deliver(read_api, write_api, number, policy, policy_hash, now, app_slug, ins
             'App controls changed before native delivery')
     # Both native operations atomically check the head, not the base. Native
     # strict checks still arbitrate subsequent base races; the App has no bypass.
+    # Live GitHub schema (2026-11-17) includes expectedHeadOid on both native inputs.
     inputs = {'pullRequestId': first['node_id'], 'expectedHeadOid': head, 'mergeMethod': 'SQUASH'}
     if latest['mergeable_state'] == 'clean':
         result = write_api.request('/graphql', 'POST', {

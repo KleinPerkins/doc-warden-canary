@@ -49,7 +49,8 @@
       ],
       "permission": "All three documented GET endpoints accept App installation tokens with metadata:read. This is distinct from Administration write for ruleset creation/update.",
       "observed_same_app": "App4217367 installation144433991 issued contents/pull_requests write plus metadata read, no Administration; a repository-scoped GET-only probe returned current_user_can_bypass never while omitting bypass_actors. This is evidence of API capability, not this canary post-cutover qualification.",
-      "limits": "Owner-visible complete actor proof and actual canary scoped current-main qualification remain required. No expanded credential permission is authorized or needed by this evidence."
+      "limits": "Owner-visible complete actor proof and actual canary scoped current-main qualification remain required. No expanded credential permission is authorized or needed by this evidence.",
+      "current_actor_semantics": "current_user_can_bypass reports the requesting credential actor ability, not a complete actor list. The actual App token must report exactly never for every active contributor, with complete coverage and unchanged repeated evidence; full hidden-list visibility remains unknown."
     },
     "ci_review_trust": {
       "accepted_authority": "Q07 accepts automatically reviewed CI/governance updates; Q11 requires same originating account; Q16 accepts operational local receipt provenance. No human technical-review or mandatory immutable CI-definition refresh gate is introduced.",
@@ -69,6 +70,38 @@
       "App_scope": "The authorized reusable GitHub App is App4217367, slug chaos-scheduler-automerge, installation144433991. Exact canary repository installation and existing encrypted credential provisioning were separately authorized. Using this App identity for the canary does not edit the chaos-scheduler product repository, its source or its releases; those remain outside this worker scope.",
       "native_delivery": "The qualified App is the authorized automated approval and native SQUASH delivery actor after fresh same-origin independent content review, exact meaningful CI and effective controls. For a clean eligible PR it may request GitHub native mergePullRequest with expectedHeadOid; for an eligible blocked PR it may request native SQUASH auto-merge. This is App-owned automated delivery, not an authoring agent manually merging. Agents remain forbidden from manual merge, pre-arming/cancelling auto-merge, bypassing checks or impersonating the App.",
       "bootstrap": "Initial automation admission is owner-only. Public visibility, source merge, merged-main CI, read-only actual App qualification and writer activation are separately verified; no source receipt claims they occurred."
+    },
+    "native_API_schema_evidence": {
+      "checked_at": "2026-11-17T18:49:58.815864+00:00",
+      "source": "GitHub live GraphQL __type introspection, read-only fixed type names, no delivery mutation",
+      "inputs": {
+        "clean": {
+          "type": "MergePullRequestInput",
+          "fields": [
+            "clientMutationId",
+            "pullRequestId",
+            "commitHeadline",
+            "commitBody",
+            "expectedHeadOid",
+            "mergeMethod",
+            "authorEmail"
+          ]
+        },
+        "blocked": {
+          "type": "EnablePullRequestAutoMergeInput",
+          "fields": [
+            "clientMutationId",
+            "pullRequestId",
+            "commitHeadline",
+            "commitBody",
+            "mergeMethod",
+            "authorEmail",
+            "expectedHeadOid",
+            "includeStack"
+          ]
+        }
+      },
+      "finding_disposition": "Both actual current GitHub input types include expectedHeadOid. Retain the supported server-side atomic head precondition on both App-owned native paths; do not remove it based on an obsolete schema assumption."
     }
   }
 }
