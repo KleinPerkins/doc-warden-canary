@@ -58,3 +58,11 @@ Local session-lock, identity-guard and data-guard remain required. Use LOCAL
 `KleinPerkins <49759187+KleinPerkins@users.noreply.github.com>` identity. Repository
 visibility, source merge, App activation and held Doc-Warden product acceptance
 are separate outcomes.
+
+The accepted G1 transition expressly replaces retired runnerless-controller delivery
+for this named repository with standard hosted Actions and the existing
+`chaos-scheduler-automerge` App4217367. Using that reusable App does not modify the
+Chaos Scheduler product repository. The qualified App may request native squash
+immediately for a clean eligible PR or native squash auto-merge for an eligible
+blocked PR; both follow the same review, CI and control checks. Authoring agents
+remain prohibited from manual merge, bypass or auto-merge manipulation.
