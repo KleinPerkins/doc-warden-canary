@@ -22,6 +22,7 @@ import urllib.request
 REPOSITORY = 'KleinPerkins/doc-warden-canary'
 REPOSITORY_ID = 1324068071
 APP_ID = 4217367
+INSTALLATION_ID = '144433991'
 APP_SLUG = 'chaos-scheduler-automerge'
 BOT_ID = 299927791
 CI_JOBS = ('engine-positive', 'engine-negative', 'delivery-contracts', 'ci-required')
@@ -521,8 +522,8 @@ def validate_app_identity(read_api, app_api, app_slug, installation_id):
     # Issuer proof is the trusted workflow's pinned create-token action with fixed
     # App4217367 input and its unmodified outputs, not public bot metadata alone.
     require(app_slug == APP_SLUG, 'wrong reviewer App slug')
-    require(isinstance(installation_id, str) and installation_id.isdecimal()
-            and int(installation_id) > 0, 'missing pinned-action installation identity')
+    require(isinstance(installation_id, str) and installation_id == INSTALLATION_ID,
+            'wrong or missing authorized App installation identity')
     bot = read_api.request('/users/' + app_slug + '[bot]')
     require(bot.get('type') == 'Bot' and bot.get('login') == APP_SLUG + '[bot]'
             and bot.get('id') == BOT_ID, 'wrong reviewer bot identity')
