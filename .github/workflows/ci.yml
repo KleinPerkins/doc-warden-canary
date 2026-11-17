@@ -1,0 +1,203 @@
+{
+  "name": "CI",
+  "on": {
+    "pull_request": {
+      "types": [
+        "opened",
+        "reopened",
+        "synchronize",
+        "ready_for_review"
+      ]
+    },
+    "push": {
+      "branches": [
+        "main"
+      ]
+    },
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "contents": "read"
+  },
+  "concurrency": {
+    "group": "ci-${{ github.event.pull_request.number || github.ref }}",
+    "cancel-in-progress": true
+  },
+  "jobs": {
+    "engine-positive": {
+      "name": "engine-positive",
+      "runs-on": "ubuntu-24.04",
+      "timeout-minutes": 10,
+      "outputs": {
+        "receipt": "${{ steps.verify.outputs.receipt }}"
+      },
+      "steps": [
+        {
+          "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "with": {
+            "ref": "${{ github.sha }}",
+            "persist-credentials": false,
+            "fetch-depth": 0
+          }
+        },
+        {
+          "uses": "actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c",
+          "with": {
+            "python-version": "3.12.12"
+          }
+        },
+        {
+          "name": "Install locked owner dependency",
+          "run": "python3 -m pip install --disable-pip-version-check --only-binary=:all: --require-hashes -r .github/ci-requirements.txt"
+        },
+        {
+          "name": "Read immutable public owner engine",
+          "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "with": {
+            "repository": "KleinPerkins/dev",
+            "ref": "d57009cb004d404adf9daa5a374a1c2b37b8288e",
+            "path": ".ci-owner-dev",
+            "persist-credentials": false,
+            "fetch-depth": 1
+          }
+        },
+        {
+          "name": "Run engine-positive",
+          "id": "verify",
+          "env": {
+            "CI_HEAD_SHA": "${{ github.event.pull_request.head.sha }}",
+            "CI_BASE_SHA": "${{ github.event.pull_request.base.sha }}",
+            "DOC_WARDEN_OWNER_SOURCE": "${{ github.workspace }}/.ci-owner-dev"
+          },
+          "run": "python3 -I -B scripts/verify.py shard --shard engine-positive"
+        }
+      ],
+      "if": "${{ github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main' }}"
+    },
+    "engine-negative": {
+      "name": "engine-negative",
+      "runs-on": "ubuntu-24.04",
+      "timeout-minutes": 10,
+      "outputs": {
+        "receipt": "${{ steps.verify.outputs.receipt }}"
+      },
+      "steps": [
+        {
+          "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "with": {
+            "ref": "${{ github.sha }}",
+            "persist-credentials": false,
+            "fetch-depth": 0
+          }
+        },
+        {
+          "uses": "actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c",
+          "with": {
+            "python-version": "3.12.12"
+          }
+        },
+        {
+          "name": "Install locked owner dependency",
+          "run": "python3 -m pip install --disable-pip-version-check --only-binary=:all: --require-hashes -r .github/ci-requirements.txt"
+        },
+        {
+          "name": "Read immutable public owner engine",
+          "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "with": {
+            "repository": "KleinPerkins/dev",
+            "ref": "d57009cb004d404adf9daa5a374a1c2b37b8288e",
+            "path": ".ci-owner-dev",
+            "persist-credentials": false,
+            "fetch-depth": 1
+          }
+        },
+        {
+          "name": "Run engine-negative",
+          "id": "verify",
+          "env": {
+            "CI_HEAD_SHA": "${{ github.event.pull_request.head.sha }}",
+            "CI_BASE_SHA": "${{ github.event.pull_request.base.sha }}",
+            "DOC_WARDEN_OWNER_SOURCE": "${{ github.workspace }}/.ci-owner-dev"
+          },
+          "run": "python3 -I -B scripts/verify.py shard --shard engine-negative"
+        }
+      ],
+      "if": "${{ github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main' }}"
+    },
+    "delivery-contracts": {
+      "name": "delivery-contracts",
+      "runs-on": "ubuntu-24.04",
+      "timeout-minutes": 10,
+      "outputs": {
+        "receipt": "${{ steps.verify.outputs.receipt }}"
+      },
+      "steps": [
+        {
+          "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "with": {
+            "ref": "${{ github.sha }}",
+            "persist-credentials": false,
+            "fetch-depth": 0
+          }
+        },
+        {
+          "uses": "actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c",
+          "with": {
+            "python-version": "3.12.12"
+          }
+        },
+        {
+          "name": "Install locked owner dependency",
+          "run": "python3 -m pip install --disable-pip-version-check --only-binary=:all: --require-hashes -r .github/ci-requirements.txt"
+        },
+        {
+          "name": "Run delivery-contracts",
+          "id": "verify",
+          "env": {
+            "CI_HEAD_SHA": "${{ github.event.pull_request.head.sha }}",
+            "CI_BASE_SHA": "${{ github.event.pull_request.base.sha }}",
+            "DOC_WARDEN_OWNER_SOURCE": "${{ github.workspace }}/.ci-owner-dev"
+          },
+          "run": "python3 -I -B scripts/verify.py shard --shard delivery-contracts"
+        }
+      ],
+      "if": "${{ github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main' }}"
+    },
+    "ci-required": {
+      "name": "ci-required",
+      "needs": [
+        "engine-positive",
+        "engine-negative",
+        "delivery-contracts"
+      ],
+      "if": "${{ always() }}",
+      "runs-on": "ubuntu-24.04",
+      "timeout-minutes": 5,
+      "steps": [
+        {
+          "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "with": {
+            "ref": "${{ github.sha }}",
+            "persist-credentials": false,
+            "fetch-depth": 0
+          }
+        },
+        {
+          "uses": "actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c",
+          "with": {
+            "python-version": "3.12.12"
+          }
+        },
+        {
+          "name": "Require each exact-run lane",
+          "env": {
+            "CI_HEAD_SHA": "${{ github.event.pull_request.head.sha }}",
+            "CI_BASE_SHA": "${{ github.event.pull_request.base.sha }}",
+            "CI_NEEDS": "${{ toJSON(needs) }}"
+          },
+          "run": "python3 -I -B scripts/verify.py aggregate"
+        }
+      ]
+    }
+  }
+}

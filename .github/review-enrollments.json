@@ -1,0 +1,42 @@
+{
+  "schema": "g1-review-enrollments/v1",
+  "repository_id": 1324068071,
+  "repository_names": [
+    "KleinPerkins/doc-warden-canary"
+  ],
+  "enabled": true,
+  "producers": [
+    {
+      "id": "enrollment-24c0a5f2",
+      "origin_account": "origin-7612de79",
+      "enabled": true,
+      "github_user_id": 49759187,
+      "cli_version": "codex-cli 0.148.0",
+      "credential_store": "keyring",
+      "instructions_sha256": "7efd718dd897e06155b8e49eca37d18b15fb1e47610d9cf4b2d26e294a99e10b",
+      "capture_adapter_sha256": "0e575b9d7b533d3f19e6dfa298f03d65bd9304b42b8176522c617aa1f8e4de26",
+      "creation_adapter_sha256": "fd2f04f6991aea4f16b9feca17be7f474ba7abae71cbb4399b6657d187be214f",
+      "allowed_startup_notice_sha256": [
+        "b2fc6975a5637afa2ac999a3260fc7980db0be97b0474c7a8a14c57e18d4a6e1",
+        "de8c81bdbcbc27db4d16d6ea11b6463544d5351492a5b397d3d31af1fbc78ca3"
+      ]
+    },
+    {
+      "id": "enrollment-e876e8eb",
+      "origin_account": "origin-6a644d43",
+      "enabled": true,
+      "github_user_id": 49759187,
+      "cli_version": "codex-cli 0.148.0",
+      "credential_store": "file",
+      "instructions_sha256": "7efd718dd897e06155b8e49eca37d18b15fb1e47610d9cf4b2d26e294a99e10b",
+      "capture_adapter_sha256": "0e575b9d7b533d3f19e6dfa298f03d65bd9304b42b8176522c617aa1f8e4de26",
+      "creation_adapter_sha256": "fd2f04f6991aea4f16b9feca17be7f474ba7abae71cbb4399b6657d187be214f",
+      "allowed_startup_notice_sha256": [
+        "b2fc6975a5637afa2ac999a3260fc7980db0be97b0474c7a8a14c57e18d4a6e1"
+      ]
+    }
+  ],
+  "governance": {
+    "accepted_delivery_boundary": "The operator accepted the documented concurrent-writer auto-merge race on 2026-11-17. App-only delivery is an authorization and operating rule, not atomic technical exclusion: another write-capable actor may arm native auto-merge after the last read and before App approval, and that approval may release the other request. Agents remain forbidden from manual merge, pre-arming, cancelling auto-merge or bypass. Fresh originating-account independent review, exact CI, the App own approval and all admission gates remain mandatory. Observed foreign or unknown auto-merge requests still reject. Coexisting unsolicited approvals never substitute for App admission evidence and are not themselves prohibited. Existing-approval reconciliation addresses lost responses, not the first-approval race. This limitation is separately accepted from Q16 receipt trust; no human technical-review gate or broader actor permission is added."
+  }
+}

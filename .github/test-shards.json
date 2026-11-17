@@ -1,0 +1,64 @@
+{
+  "schema": "doc-warden-canary-test-sharding/v1",
+  "state": "configured",
+  "aggregate": "ci-required",
+  "discovery": {
+    "include": [
+      "tests/test_*.py"
+    ],
+    "exclude": []
+  },
+  "shards": [
+    {
+      "id": "engine-positive",
+      "tests": [
+        "tests/test_engine_positive.py"
+      ],
+      "command": [
+        "python3",
+        "-I",
+        "-B",
+        "scripts/verify.py",
+        "local",
+        "--shard",
+        "engine-positive"
+      ],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "engine-negative",
+      "tests": [
+        "tests/test_engine_negative.py"
+      ],
+      "command": [
+        "python3",
+        "-I",
+        "-B",
+        "scripts/verify.py",
+        "local",
+        "--shard",
+        "engine-negative"
+      ],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "delivery-contracts",
+      "tests": [
+        "tests/test_ci.py",
+        "tests/test_create_review_pr.py",
+        "tests/test_local_review.py",
+        "tests/test_reviewer_app.py"
+      ],
+      "command": [
+        "python3",
+        "-I",
+        "-B",
+        "scripts/verify.py",
+        "local",
+        "--shard",
+        "delivery-contracts"
+      ],
+      "timeout_seconds": 300
+    }
+  ]
+}

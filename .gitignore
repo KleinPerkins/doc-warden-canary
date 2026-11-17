@@ -30,3 +30,8 @@ agent-learnings.md
 ._*
 *.swp
 # END KleinPerkins/dev baseline
+
+# Disposable pinned public owner checkout and Python bytecode
+.ci-owner-dev/
+__pycache__/
+*.pyc
