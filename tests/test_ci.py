@@ -2,6 +2,7 @@
 import copy
 import importlib.util
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -114,3 +115,29 @@ class Workflow(unittest.TestCase):
         self.assertEqual(gate['if'],'${{ always() }}')
         self.assertEqual(gate['steps'][-1]['env']['CI_NEEDS'],'${{ toJSON(needs) }}')
         self.assertEqual(gate['steps'][-1]['run'],'python3 -I -B scripts/verify.py aggregate')
+
+
+class ReadOnlyHarnessSnapshot(unittest.TestCase):
+    def test_mutations_to_tree_metadata_links_specials_and_git_are_detected(self):
+        from canary_support import snapshot
+        def retarget(root):
+            (root/'link').unlink();(root/'link').symlink_to('same-bytes')
+        changes=[lambda r:(r/'empty').mkdir(),lambda r:(r/'tracked').chmod(0o755),
+                 lambda r:(r/'.git/HEAD').write_text('changed'),retarget,
+                 lambda r:os.mkfifo(r/'pipe')]
+        for change in changes:
+            with self.subTest(change=change),tempfile.TemporaryDirectory() as temporary:
+                root=Path(temporary);(root/'tracked').write_text('same');(root/'tracked').chmod(0o644)
+                (root/'same-bytes').write_text('same');(root/'link').symlink_to('tracked')
+                (root/'.git').mkdir();(root/'.git/HEAD').write_text('base')
+                before=snapshot(root);change(root)
+                self.assertNotEqual(snapshot(root),before)
+
+    def test_symlink_targets_are_not_followed_and_fifo_is_not_read(self):
+        from canary_support import snapshot
+        with tempfile.TemporaryDirectory() as temporary:
+            top=Path(temporary);root=top/'repo';root.mkdir();outside=top/'outside';outside.write_text('one')
+            (root/'link').symlink_to(outside);os.mkfifo(root/'pipe')
+            before=snapshot(root);outside.write_text('two')
+            self.assertEqual(snapshot(root),before)
+            self.assertIn('pipe',before)

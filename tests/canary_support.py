@@ -4,6 +4,7 @@ import hashlib
 import os
 from pathlib import Path
 import shutil
+import stat
 import subprocess
 import tempfile
 
@@ -21,8 +22,27 @@ def owner_source():
     return path
 
 def snapshot(path):
-    return {str(p.relative_to(path)): hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in path.rglob('*') if p.is_file() and '.git' not in p.relative_to(path).parts}
+    # Exclude access time: reading a fixture may legitimately update it. Include
+    # repository Git state, empty directories and metadata; never follow links.
+    rows = {}
+    def record(p):
+        info = p.lstat()
+        row = [stat.S_IFMT(info.st_mode), stat.S_IMODE(info.st_mode), info.st_dev,
+               info.st_ino, info.st_mtime_ns, info.st_ctime_ns]
+        if stat.S_ISREG(info.st_mode):
+            row.append(hashlib.sha256(p.read_bytes()).hexdigest())
+        elif stat.S_ISLNK(info.st_mode):
+            row.append(os.readlink(p))
+        elif not stat.S_ISDIR(info.st_mode):
+            row.append(info.st_rdev)
+        rows[str(p.relative_to(path))] = tuple(row)
+    def refuse(error):
+        raise error
+    record(path)
+    for directory, dirs, files in os.walk(path, followlinks=False, onerror=refuse):
+        for name in dirs + files:
+            record(Path(directory) / name)
+    return rows
 
 @contextmanager
 def fixture(kind='current'):
@@ -46,10 +66,11 @@ def fixture(kind='current'):
         subprocess.run(['git','-C',str(repo),'add','.'],env=env,check=True)
         subprocess.run(['git','-C',str(repo),'-c','core.hooksPath=/dev/null','-c','user.name=Canary fixture',
                         '-c','user.email=fixture@example.invalid','commit','-qm','Disposable source fixture'],env=env,check=True)
+        home_before = snapshot(home)
         def command(*args):
             return subprocess.run(['bash',str(owner/'_ops/bin/doc-warden.sh'),*args],cwd=top,env=env,
                                   text=True,capture_output=True,timeout=60)
         try:
             yield repo, command
         finally:
-            assert snapshot(home) == {}, "owner command wrote to disposable home"
+            assert snapshot(home) == home_before, "owner command wrote to disposable home"
