@@ -1,0 +1,621 @@
+{
+  "schema": "canary-source-qualification-evidence/v1",
+  "scope": "CI source admission and read-only App qualification; ordinary App delivery and product/host acceptance are separate",
+  "source_revision": "8c20bc10929cb6042bebee636b3ec7594ee4b048",
+  "CI_run": {
+    "id": 44157455928,
+    "run_attempt": 1,
+    "head_sha": "8c20bc10929cb6042bebee636b3ec7594ee4b048",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "html_url": "https://github.com/KleinPerkins/doc-warden-canary/actions/runs/44157455928",
+    "run_started_at": "2026-11-17T19:20:08Z",
+    "created_at": "2026-11-17T19:20:08Z",
+    "updated_at": "2026-11-17T19:20:54Z"
+  },
+  "jobs": [
+    {
+      "id": 134301918092,
+      "name": "delivery-contracts",
+      "status": "completed",
+      "conclusion": "success",
+      "check_run_url": "https://api.github.com/repos/KleinPerkins/doc-warden-canary/check-runs/134301918092",
+      "relevant_unchanged_log_lines": [],
+      "full_log_sha256": "2b0058dbd6dc80e8a0a8267e62e6f234aa30047a6cdc9a5f139b8e907982776f"
+    },
+    {
+      "id": 134301918856,
+      "name": "engine-negative",
+      "status": "completed",
+      "conclusion": "success",
+      "check_run_url": "https://api.github.com/repos/KleinPerkins/doc-warden-canary/check-runs/134301918856",
+      "relevant_unchanged_log_lines": [],
+      "full_log_sha256": "40f16f3df2a6ffd2b4765fd18f2d7aa9be4dc7d4e763efd610be061cff20d04a"
+    },
+    {
+      "id": 134301918903,
+      "name": "engine-positive",
+      "status": "completed",
+      "conclusion": "success",
+      "check_run_url": "https://api.github.com/repos/KleinPerkins/doc-warden-canary/check-runs/134301918903",
+      "relevant_unchanged_log_lines": [],
+      "full_log_sha256": "b619078d6361b55438851c42742d1a882c32fb35711010cb049fd2ae16719a86"
+    },
+    {
+      "id": 134302212911,
+      "name": "ci-required",
+      "status": "completed",
+      "conclusion": "success",
+      "check_run_url": "https://api.github.com/repos/KleinPerkins/doc-warden-canary/check-runs/134302212911",
+      "relevant_unchanged_log_lines": [
+        "2026-11-17T19:20:52.2545167Z DOC_WARDEN_CANARY_CI_AGGREGATE_V1 {\"contract_sha256\":\"50a788b23f6ed601d18a7ca925b7dac0e15ff01a6e838b182b71872f6a8f3ffa\",\"identity\":{\"base_sha\":\"\",\"event\":\"push\",\"head_sha\":\"\",\"ref\":\"refs/heads/main\",\"repository\":\"KleinPerkins/doc-warden-canary\",\"repository_id\":\"1324068071\",\"revision\":\"8c20bc10929cb6042bebee636b3ec7594ee4b048\",\"run_attempt\":\"1\",\"run_id\":\"44157455928\",\"workflow\":\"CI\",\"workflow_ref\":\"KleinPerkins/doc-warden-canary/.github/workflows/ci.yml@refs/heads/main\",\"workflow_sha\":\"8c20bc10929cb6042bebee636b3ec7594ee4b048\"},\"result\":\"success\",\"schema\":\"doc-warden-canary-ci-aggregate/v1\"}"
+      ],
+      "full_log_sha256": "76d67145cbee0a93d7739396f67934acacd79132ed5eb8a30ba2b15314928857"
+    }
+  ],
+  "read_only_App_qualification": {
+    "at": "2026-11-17T19:29:38.575908+00:00",
+    "run": 44158421365,
+    "log_sha256": "8f2e54a4444a80975faa5a77dfa79c0ac1337d2576f9bdf8dd17613d291065bd",
+    "result": {
+      "app": {
+        "app_id": 4217367,
+        "bot_id": 299927791,
+        "installation_id": "144433991",
+        "issuer_proof": "trusted-pinned-create-token-action",
+        "repository_id": 1324068071,
+        "slug": "chaos-scheduler-automerge"
+      },
+      "app_non_bypass": {
+        "27488085": "never",
+        "27488087": "never"
+      },
+      "bypass_visibility": {
+        "27488085": "redacted-or-unavailable",
+        "27488087": "redacted-or-unavailable"
+      },
+      "ci": [
+        44157455928,
+        1
+      ],
+      "contributing_rulesets": [
+        27488085,
+        27488087
+      ],
+      "controls_sha256": "0304876d96b014bf1302936ca41954e693b564a701b0ef3dcf44537e94e09f01",
+      "mutated": false,
+      "qualification_stage": "current",
+      "revision": "8c20bc10929cb6042bebee636b3ec7594ee4b048",
+      "status": "qualified-app-read-only"
+    },
+    "temporary_token_revoked": true,
+    "writer_activated": false
+  },
+  "owner_visible_controls": {
+    "rulesets": [
+      {
+        "id": 27488085,
+        "name": "history-integrity",
+        "target": "branch",
+        "source_type": "Repository",
+        "source": "KleinPerkins/doc-warden-canary",
+        "enforcement": "active",
+        "conditions": {
+          "ref_name": {
+            "exclude": [],
+            "include": [
+              "~ALL"
+            ]
+          }
+        },
+        "rules": [
+          {
+            "type": "deletion"
+          },
+          {
+            "type": "non_fast_forward"
+          }
+        ],
+        "node_id": "RRS_lACqUmVwb3NpdG9yec5O66znzgGjb1U",
+        "created_at": "2026-11-17T11:23:15.808-08:00",
+        "updated_at": "2026-11-17T11:23:15.839-08:00",
+        "bypass_actors": [
+          {
+            "actor_id": 5,
+            "actor_type": "RepositoryRole",
+            "bypass_mode": "always"
+          }
+        ],
+        "current_user_can_bypass": "always",
+        "_links": {
+          "self": {
+            "href": "https://api.github.com/repos/KleinPerkins/doc-warden-canary/rulesets/27488085"
+          },
+          "html": {
+            "href": "https://github.com/KleinPerkins/doc-warden-canary/rules/27488085"
+          }
+        }
+      },
+      {
+        "id": 27488087,
+        "name": "g1-ci-review-delivery",
+        "target": "branch",
+        "source_type": "Repository",
+        "source": "KleinPerkins/doc-warden-canary",
+        "enforcement": "active",
+        "conditions": {
+          "ref_name": {
+            "exclude": [],
+            "include": [
+              "~DEFAULT_BRANCH"
+            ]
+          }
+        },
+        "rules": [
+          {
+            "type": "required_linear_history"
+          },
+          {
+            "type": "required_status_checks",
+            "parameters": {
+              "strict_required_status_checks_policy": true,
+              "do_not_enforce_on_create": false,
+              "required_status_checks": [
+                {
+                  "context": "ci-required",
+                  "integration_id": 15368
+                }
+              ]
+            }
+          },
+          {
+            "type": "pull_request",
+            "parameters": {
+              "required_approving_review_count": 1,
+              "dismiss_stale_reviews_on_push": true,
+              "required_reviewers": [],
+              "require_code_owner_review": false,
+              "require_last_push_approval": false,
+              "required_review_thread_resolution": true,
+              "require_extra_approval_for_unattributed_changes": true,
+              "allowed_merge_methods": [
+                "squash"
+              ]
+            }
+          }
+        ],
+        "node_id": "RRS_lACqUmVwb3NpdG9yec5O66znzgGjb1c",
+        "created_at": "2026-11-17T11:23:16.869-08:00",
+        "updated_at": "2026-11-17T11:23:16.989-08:00",
+        "bypass_actors": [
+          {
+            "actor_id": 5,
+            "actor_type": "RepositoryRole",
+            "bypass_mode": "pull_request"
+          }
+        ],
+        "current_user_can_bypass": "pull_requests_only",
+        "_links": {
+          "self": {
+            "href": "https://api.github.com/repos/KleinPerkins/doc-warden-canary/rulesets/27488087"
+          },
+          "html": {
+            "href": "https://github.com/KleinPerkins/doc-warden-canary/rules/27488087"
+          }
+        }
+      }
+    ],
+    "vars": {
+      "variables": [
+        {
+          "name": "REVIEWER_APP_QUALIFY",
+          "value": "true",
+          "created_at": "2026-11-17T19:24:43Z",
+          "updated_at": "2026-11-17T19:24:43Z"
+        }
+      ],
+      "total_count": 1
+    },
+    "merge": {
+      "allow_squash_merge": true,
+      "allow_merge_commit": false,
+      "allow_rebase_merge": false,
+      "allow_auto_merge": true
+    }
+  },
+  "reviewed_source_contract": {
+    "schema": "doc-warden-canary-ci-contract/v1",
+    "repository_id": 1324068071,
+    "repository_names": [
+      "KleinPerkins/doc-warden-canary"
+    ],
+    "workflow": ".github/workflows/ci.yml",
+    "workflow_name": "CI",
+    "required_check": "ci-required",
+    "actions_app_id": 15368,
+    "reviewer_app_id": 4217367,
+    "shards": [
+      "engine-positive",
+      "engine-negative",
+      "delivery-contracts"
+    ],
+    "commands": {
+      "engine-positive": [],
+      "engine-negative": [],
+      "delivery-contracts": []
+    },
+    "baseline_tests": [
+      {
+        "path": "tests/test_engine_positive.py",
+        "owner_shard": "engine-positive"
+      },
+      {
+        "path": "tests/test_engine_negative.py",
+        "owner_shard": "engine-negative"
+      },
+      {
+        "path": "tests/test_ci.py",
+        "owner_shard": "delivery-contracts"
+      },
+      {
+        "path": "tests/test_create_review_pr.py",
+        "owner_shard": "delivery-contracts"
+      },
+      {
+        "path": "tests/test_local_review.py",
+        "owner_shard": "delivery-contracts"
+      },
+      {
+        "path": "tests/test_reviewer_app.py",
+        "owner_shard": "delivery-contracts"
+      }
+    ],
+    "host_only": [
+      "home installation",
+      "held v2 product acceptance",
+      "repository publication",
+      "App activation"
+    ],
+    "allowed_skip_reasons": [],
+    "nonpassing_runtime_cases": [],
+    "owner_source": {
+      "repository": "KleinPerkins/dev",
+      "revision": "d57009cb004d404adf9daa5a374a1c2b37b8288e"
+    }
+  },
+  "reviewed_workflow": {
+    "name": "CI",
+    "on": {
+      "pull_request": {
+        "types": [
+          "opened",
+          "reopened",
+          "synchronize",
+          "ready_for_review"
+        ]
+      },
+      "push": {
+        "branches": [
+          "main"
+        ]
+      },
+      "workflow_dispatch": {}
+    },
+    "permissions": {
+      "contents": "read"
+    },
+    "concurrency": {
+      "group": "ci-${{ github.event.pull_request.number || github.ref }}",
+      "cancel-in-progress": true
+    },
+    "jobs": {
+      "engine-positive": {
+        "name": "engine-positive",
+        "runs-on": "ubuntu-24.04",
+        "timeout-minutes": 10,
+        "outputs": {
+          "receipt": "${{ steps.verify.outputs.receipt }}"
+        },
+        "steps": [
+          {
+            "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "with": {
+              "ref": "${{ github.sha }}",
+              "persist-credentials": false,
+              "fetch-depth": 0
+            }
+          },
+          {
+            "uses": "actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c",
+            "with": {
+              "python-version": "3.12.12"
+            }
+          },
+          {
+            "name": "Install locked owner dependency",
+            "run": "python3 -m pip install --disable-pip-version-check --only-binary=:all: --require-hashes -r .github/ci-requirements.txt"
+          },
+          {
+            "name": "Read immutable public owner engine",
+            "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "with": {
+              "repository": "KleinPerkins/dev",
+              "ref": "d57009cb004d404adf9daa5a374a1c2b37b8288e",
+              "path": ".ci-owner-dev",
+              "persist-credentials": false,
+              "fetch-depth": 1
+            }
+          },
+          {
+            "name": "Run engine-positive",
+            "id": "verify",
+            "env": {
+              "CI_HEAD_SHA": "${{ github.event.pull_request.head.sha }}",
+              "CI_BASE_SHA": "${{ github.event.pull_request.base.sha }}",
+              "DOC_WARDEN_OWNER_SOURCE": "${{ github.workspace }}/.ci-owner-dev"
+            },
+            "run": "python3 -I -B scripts/verify.py shard --shard engine-positive"
+          }
+        ],
+        "if": "${{ github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main' }}"
+      },
+      "engine-negative": {
+        "name": "engine-negative",
+        "runs-on": "ubuntu-24.04",
+        "timeout-minutes": 10,
+        "outputs": {
+          "receipt": "${{ steps.verify.outputs.receipt }}"
+        },
+        "steps": [
+          {
+            "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "with": {
+              "ref": "${{ github.sha }}",
+              "persist-credentials": false,
+              "fetch-depth": 0
+            }
+          },
+          {
+            "uses": "actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c",
+            "with": {
+              "python-version": "3.12.12"
+            }
+          },
+          {
+            "name": "Install locked owner dependency",
+            "run": "python3 -m pip install --disable-pip-version-check --only-binary=:all: --require-hashes -r .github/ci-requirements.txt"
+          },
+          {
+            "name": "Read immutable public owner engine",
+            "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "with": {
+              "repository": "KleinPerkins/dev",
+              "ref": "d57009cb004d404adf9daa5a374a1c2b37b8288e",
+              "path": ".ci-owner-dev",
+              "persist-credentials": false,
+              "fetch-depth": 1
+            }
+          },
+          {
+            "name": "Run engine-negative",
+            "id": "verify",
+            "env": {
+              "CI_HEAD_SHA": "${{ github.event.pull_request.head.sha }}",
+              "CI_BASE_SHA": "${{ github.event.pull_request.base.sha }}",
+              "DOC_WARDEN_OWNER_SOURCE": "${{ github.workspace }}/.ci-owner-dev"
+            },
+            "run": "python3 -I -B scripts/verify.py shard --shard engine-negative"
+          }
+        ],
+        "if": "${{ github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main' }}"
+      },
+      "delivery-contracts": {
+        "name": "delivery-contracts",
+        "runs-on": "ubuntu-24.04",
+        "timeout-minutes": 10,
+        "outputs": {
+          "receipt": "${{ steps.verify.outputs.receipt }}"
+        },
+        "steps": [
+          {
+            "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "with": {
+              "ref": "${{ github.sha }}",
+              "persist-credentials": false,
+              "fetch-depth": 0
+            }
+          },
+          {
+            "uses": "actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c",
+            "with": {
+              "python-version": "3.12.12"
+            }
+          },
+          {
+            "name": "Install locked owner dependency",
+            "run": "python3 -m pip install --disable-pip-version-check --only-binary=:all: --require-hashes -r .github/ci-requirements.txt"
+          },
+          {
+            "name": "Run delivery-contracts",
+            "id": "verify",
+            "env": {
+              "CI_HEAD_SHA": "${{ github.event.pull_request.head.sha }}",
+              "CI_BASE_SHA": "${{ github.event.pull_request.base.sha }}",
+              "DOC_WARDEN_OWNER_SOURCE": "${{ github.workspace }}/.ci-owner-dev"
+            },
+            "run": "python3 -I -B scripts/verify.py shard --shard delivery-contracts"
+          }
+        ],
+        "if": "${{ github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main' }}"
+      },
+      "ci-required": {
+        "name": "ci-required",
+        "needs": [
+          "engine-positive",
+          "engine-negative",
+          "delivery-contracts"
+        ],
+        "if": "${{ always() }}",
+        "runs-on": "ubuntu-24.04",
+        "timeout-minutes": 5,
+        "steps": [
+          {
+            "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "with": {
+              "ref": "${{ github.sha }}",
+              "persist-credentials": false,
+              "fetch-depth": 0
+            }
+          },
+          {
+            "uses": "actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c",
+            "with": {
+              "python-version": "3.12.12"
+            }
+          },
+          {
+            "name": "Require each exact-run lane",
+            "env": {
+              "CI_HEAD_SHA": "${{ github.event.pull_request.head.sha }}",
+              "CI_BASE_SHA": "${{ github.event.pull_request.base.sha }}",
+              "CI_NEEDS": "${{ toJSON(needs) }}"
+            },
+            "run": "python3 -I -B scripts/verify.py aggregate"
+          }
+        ]
+      }
+    }
+  },
+  "reviewed_test_inventory": {
+    "schema": "doc-warden-canary-test-sharding/v1",
+    "state": "configured",
+    "aggregate": "ci-required",
+    "discovery": {
+      "include": [
+        "tests/test_*.py"
+      ],
+      "exclude": []
+    },
+    "shards": [
+      {
+        "id": "engine-positive",
+        "tests": [
+          "tests/test_engine_positive.py"
+        ],
+        "command": [
+          "python3",
+          "-I",
+          "-B",
+          "scripts/verify.py",
+          "local",
+          "--shard",
+          "engine-positive"
+        ],
+        "timeout_seconds": 300
+      },
+      {
+        "id": "engine-negative",
+        "tests": [
+          "tests/test_engine_negative.py"
+        ],
+        "command": [
+          "python3",
+          "-I",
+          "-B",
+          "scripts/verify.py",
+          "local",
+          "--shard",
+          "engine-negative"
+        ],
+        "timeout_seconds": 300
+      },
+      {
+        "id": "delivery-contracts",
+        "tests": [
+          "tests/test_ci.py",
+          "tests/test_create_review_pr.py",
+          "tests/test_local_review.py",
+          "tests/test_reviewer_app.py"
+        ],
+        "command": [
+          "python3",
+          "-I",
+          "-B",
+          "scripts/verify.py",
+          "local",
+          "--shard",
+          "delivery-contracts"
+        ],
+        "timeout_seconds": 300
+      }
+    ]
+  },
+  "prior_unchanged_source_review": {
+    "unedited_public_receipt": {
+      "capture_id": "a917aa03-49bb-478a-9833-cffe020caacf",
+      "completed_at": "2026-11-17T19:04:57.378659Z",
+      "instructions_sha256": "7efd718dd897e06155b8e49eca37d18b15fb1e47610d9cf4b2d26e294a99e10b",
+      "report_sha256": "566e56c02163cbcaa0987ef83b097645ac4864862e7c8ee6494032c62d9bf746",
+      "review": {
+        "coverage": "complete",
+        "findings": [],
+        "summary": "All supplied changed lines were examined against the trusted policy; no actionable correctness, security, or policy violations were identified.",
+        "unresolved_findings": [],
+        "verdict": "pass"
+      },
+      "reviewer_enrollment_id": "enrollment-24c0a5f2",
+      "reviewer_origin_account": "origin-7612de79",
+      "runtime": {
+        "cli_version": "codex-cli 0.148.0",
+        "credential_store": "keyring",
+        "event_stream_sha256": "355750b96c05c27bc1fd3277103b1d5adc7c9dac63de9490471e9e0396c93e9b",
+        "startup_notice_sha256": [
+          "de8c81bdbcbc27db4d16d6ea11b6463544d5351492a5b397d3d31af1fbc78ca3",
+          "b2fc6975a5637afa2ac999a3260fc7980db0be97b0474c7a8a14c57e18d4a6e1",
+          "de8c81bdbcbc27db4d16d6ea11b6463544d5351492a5b397d3d31af1fbc78ca3"
+        ],
+        "status": "completed",
+        "thread_id": "01a1eae4-dec0-7a32-a91a-ca146002f6d3",
+        "turn_id": null
+      },
+      "schema": "g1-local-review/v1",
+      "started_at": "2026-11-17T19:03:49.126558Z",
+      "trust_model": "q16-operational-local",
+      "tuple": {
+        "base_sha": "e35d30f9d6dd3b004d56c5744fe6b38102d6bc7a",
+        "diff_sha256": "2342c8a0ca0108ab1d3ebbb489aa49007e27575d03457a4164ac9047978fc8cc",
+        "head_sha": "9d40ee005233bc33ee45e7201f0e9f5452f442f9",
+        "merge_base_sha": "e35d30f9d6dd3b004d56c5744fe6b38102d6bc7a",
+        "origin_account": "origin-7612de79",
+        "policy_sha256": "41fe5aed4276279d4d94cd1637ba7f370152f12bdad2ce92b9ffba19ab8d2d9b",
+        "repository": "KleinPerkins/doc-warden-canary",
+        "repository_id": 1324068071
+      },
+      "workspace_binding": "owner-declared-enrollment"
+    },
+    "public_receipt_comment": 6958016581,
+    "reviewed_head_tree": "19f228454a8ef57ffaf3c2eeaa2e51d064ed09d8",
+    "merged_revision_tree": "19f228454a8ef57ffaf3c2eeaa2e51d064ed09d8",
+    "tree_equality_verified": true,
+    "owner_bootstrap_PR": 2,
+    "meaning": "The bootstrap squash has a new commit ID and exactly the reviewed source tree; this historical source review is not a receipt for a subsequent PR."
+  },
+  "CI_selection": {
+    "observed_at": "2026-11-17T19:38:09.335777+00:00",
+    "candidates": [
+      {
+        "id": 44157455928,
+        "run_attempt": 1,
+        "run_started_at": "2026-11-17T19:20:08Z",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "8c20bc10929cb6042bebee636b3ec7594ee4b048",
+        "event": "push"
+      }
+    ],
+    "selected_run_id": 44157455928,
+    "selection": "Unique latest run_started_at; all matching attempts completed at observation",
+    "historical_observation_only": true
+  }
+}
