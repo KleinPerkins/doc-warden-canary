@@ -141,3 +141,16 @@ class ReadOnlyHarnessSnapshot(unittest.TestCase):
             before=snapshot(root);outside.write_text('two')
             self.assertEqual(snapshot(root),before)
             self.assertIn('pipe',before)
+
+
+class OwnerCheckoutIdentity(unittest.TestCase):
+    def test_exact_public_checkout_transport_forms_and_wrong_origins(self):
+        import canary_support as support
+        valid=('https://github.com/KleinPerkins/dev.git','https://github.com/KleinPerkins/dev','git@github.com:KleinPerkins/dev.git')
+        invalid=('https://github.com/other/dev','https://github.com/KleinPerkins/dev-other','https://github.com.evil.invalid/KleinPerkins/dev','https://credential@github.com/KleinPerkins/dev')
+        with tempfile.TemporaryDirectory() as temporary:
+            for remote in valid+invalid:
+                with self.subTest(remote=remote),patch.dict(os.environ,{'DOC_WARDEN_OWNER_SOURCE':temporary}),patch.object(support.subprocess,'check_output',side_effect=[support.OWNER_REVISION,remote,'']):
+                    if remote in valid:self.assertEqual(support.owner_source(),Path(temporary).resolve())
+                    else:
+                        with self.assertRaisesRegex(AssertionError,'owner origin'):support.owner_source()

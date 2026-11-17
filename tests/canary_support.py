@@ -17,7 +17,7 @@ def owner_source():
     def git(*args):
         return subprocess.check_output(['git', '-C', str(path), *args], text=True).strip()
     assert git('rev-parse', 'HEAD') == OWNER_REVISION, 'wrong owner engine revision'
-    assert git('remote', 'get-url', 'origin') in ('https://github.com/KleinPerkins/dev.git', 'git@github.com:KleinPerkins/dev.git'), 'wrong public owner origin'
+    assert git('remote', 'get-url', 'origin') in ('https://github.com/KleinPerkins/dev.git', 'https://github.com/KleinPerkins/dev', 'git@github.com:KleinPerkins/dev.git'), 'wrong public owner origin'
     assert not git('status', '--porcelain', '--untracked-files=normal'), 'owner engine checkout must stay clean'
     return path
 
