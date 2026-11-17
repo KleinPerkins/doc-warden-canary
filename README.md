@@ -66,3 +66,25 @@ Chaos Scheduler product repository. The qualified App may request native squash
 immediately for a clean eligible PR or native squash auto-merge for an eligible
 blocked PR; both follow the same review, CI and control checks. Authoring agents
 remain prohibited from manual merge, bypass or auto-merge manipulation.
+
+
+## CI transition evidence — 17 November 2026
+
+The owner admitted the CI/App source through [PR #2](https://github.com/KleinPerkins/doc-warden-canary/pull/2).
+The merged revision `8c20bc10929cb6042bebee636b3ec7594ee4b048` passed
+[all three hosted lanes and the aggregate](https://github.com/KleinPerkins/doc-warden-canary/actions/runs/44157455928).
+The positive and negative lanes execute the pinned Doc-Warden engine against disposable
+fixtures; delivery contracts check the review, creation and App failure paths.
+
+[Read-only App qualification](https://github.com/KleinPerkins/doc-warden-canary/actions/runs/44158421365)
+verified the same merged revision and CI run, the existing Chaos Scheduler App and
+repository-scoped installation, and that the App cannot bypass either active ruleset.
+Its temporary token was revoked. The owner-visible controls require strict current
+`ci-required`, one stale-dismissed approval, resolved discussions and linear history;
+force-push and deletion protection remain active with the documented owner exceptions.
+
+This evidence establishes source admission and read-only readiness. Ordinary delivery
+must still demonstrate an automatic originating-account review, exact candidate CI,
+and App-owned approval and native squash; neither the owner bootstrap nor this note
+substitutes for that proof. Held Doc-Warden work, local installation and product
+acceptance remain separate.
