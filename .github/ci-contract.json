@@ -1,0 +1,60 @@
+{
+  "schema": "doc-warden-canary-ci-contract/v1",
+  "repository_id": 1324068071,
+  "repository_names": [
+    "KleinPerkins/doc-warden-canary"
+  ],
+  "workflow": ".github/workflows/ci.yml",
+  "workflow_name": "CI",
+  "required_check": "ci-required",
+  "actions_app_id": 15368,
+  "reviewer_app_id": 4217367,
+  "shards": [
+    "engine-positive",
+    "engine-negative",
+    "delivery-contracts"
+  ],
+  "commands": {
+    "engine-positive": [],
+    "engine-negative": [],
+    "delivery-contracts": []
+  },
+  "baseline_tests": [
+    {
+      "path": "tests/test_engine_positive.py",
+      "owner_shard": "engine-positive"
+    },
+    {
+      "path": "tests/test_engine_negative.py",
+      "owner_shard": "engine-negative"
+    },
+    {
+      "path": "tests/test_ci.py",
+      "owner_shard": "delivery-contracts"
+    },
+    {
+      "path": "tests/test_create_review_pr.py",
+      "owner_shard": "delivery-contracts"
+    },
+    {
+      "path": "tests/test_local_review.py",
+      "owner_shard": "delivery-contracts"
+    },
+    {
+      "path": "tests/test_reviewer_app.py",
+      "owner_shard": "delivery-contracts"
+    }
+  ],
+  "host_only": [
+    "home installation",
+    "held v2 product acceptance",
+    "repository publication",
+    "App activation"
+  ],
+  "allowed_skip_reasons": [],
+  "nonpassing_runtime_cases": [],
+  "owner_source": {
+    "repository": "KleinPerkins/dev",
+    "revision": "d57009cb004d404adf9daa5a374a1c2b37b8288e"
+  }
+}

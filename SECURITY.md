@@ -1,7 +1,7 @@
 <!-- BEGIN KleinPerkins/dev baseline (managed by KleinPerkins/dev; do not hand-edit — see _ops/baseline/README.md in KleinPerkins/dev) -->
 # Security Policy
 
-This is a private repository owned by **KleinPerkins**. There is no public bug-bounty program.
+This is a public source repository owned by **KleinPerkins**. There is no public bug-bounty program.
 
 ## Reporting a vulnerability
 
@@ -20,7 +20,8 @@ Please include:
 ## Response
 
 This repo is maintained by a single owner (best-effort response; no formal SLA). Reports are
-triaged promptly and fixes are pushed directly to `main` once verified.
+triaged promptly. Source fixes follow the independent review, hosted CI and App-owned
+PR delivery process described in README.md; initial automation admission remains owner-only.
 
 ## Scope
 
