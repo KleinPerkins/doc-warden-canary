@@ -31,6 +31,9 @@ MARKER = '<!-- g1-review-receipt:v1 -->\n'
 ORIGIN_MARKER = '<!-- g1-pr-origin:v1 -->\n'
 MAX_RECEIPT = 60000
 MAX_DIFF = 5000000
+DIFF_ARGS = ('diff', '--no-ext-diff', '--no-textconv', '--no-color', '--binary', '--full-index',
+             '--no-renames', '--diff-algorithm=myers', '--no-indent-heuristic',
+             '--src-prefix=a/', '--dst-prefix=b/', '--unified=3', '--inter-hunk-context=0')
 MERGE_SETTINGS_QUERY = ('query CanaryMergeSettings { repository(owner:"KleinPerkins",'
     'name:"doc-warden-canary") { databaseId nameWithOwner mergeCommitAllowed '
     'rebaseMergeAllowed squashMergeAllowed autoMergeAllowed } }')
@@ -341,7 +344,7 @@ def git_tuple(head, base, token):
                 return data
         command('init', '--bare', '.')
         merge_base = bounded_merge_base(command, base, head)
-        patch = command('-c', 'color.ui=false', 'diff', '--no-ext-diff', '--no-textconv', '--binary', base+'...'+head, '--')
+        patch = command('-c', 'core.quotePath=true', *DIFF_ARGS, base+'...'+head, '--')
         return merge_base, digest(patch)
 
 def validate_ci_log(log, pr, merge_sha, run, contract_hash):
@@ -474,6 +477,8 @@ def app_non_bypass(rules, rulesets):
 
 def controls_snapshot(api, *, require_legacy=False, require_successor_only=False,
                       require_app_non_bypass=False):
+    # These GitHub GET endpoints require metadata:read, not Administration.
+    # Complete hidden actor lists remain unknown to the App credential.
     prefix = '/repos/' + REPOSITORY
     repo = repository_snapshot(api)
     rules = api.request(prefix + '/rules/branches/main')

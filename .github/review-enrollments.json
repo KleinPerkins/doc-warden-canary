@@ -14,7 +14,7 @@
       "cli_version": "codex-cli 0.148.0",
       "credential_store": "keyring",
       "instructions_sha256": "7efd718dd897e06155b8e49eca37d18b15fb1e47610d9cf4b2d26e294a99e10b",
-      "capture_adapter_sha256": "0e575b9d7b533d3f19e6dfa298f03d65bd9304b42b8176522c617aa1f8e4de26",
+      "capture_adapter_sha256": "9e762a7e3fea503f1c89f6920c02a697bde97834be9a460a9b5f76917ed14a54",
       "creation_adapter_sha256": "e186189b24dc77ddb29bb462d1ad378f564df7c08264f49b8e10f138e6ce152a",
       "allowed_startup_notice_sha256": [
         "b2fc6975a5637afa2ac999a3260fc7980db0be97b0474c7a8a14c57e18d4a6e1",
@@ -29,7 +29,7 @@
       "cli_version": "codex-cli 0.148.0",
       "credential_store": "file",
       "instructions_sha256": "7efd718dd897e06155b8e49eca37d18b15fb1e47610d9cf4b2d26e294a99e10b",
-      "capture_adapter_sha256": "0e575b9d7b533d3f19e6dfa298f03d65bd9304b42b8176522c617aa1f8e4de26",
+      "capture_adapter_sha256": "9e762a7e3fea503f1c89f6920c02a697bde97834be9a460a9b5f76917ed14a54",
       "creation_adapter_sha256": "e186189b24dc77ddb29bb462d1ad378f564df7c08264f49b8e10f138e6ce152a",
       "allowed_startup_notice_sha256": [
         "b2fc6975a5637afa2ac999a3260fc7980db0be97b0474c7a8a14c57e18d4a6e1"
@@ -38,6 +38,24 @@
   ],
   "governance": {
     "accepted_delivery_boundary": "The operator accepted the documented concurrent-writer auto-merge race on 2026-11-17. App-only delivery is an authorization and operating rule, not atomic technical exclusion: another write-capable actor may arm native auto-merge after the last read and before App approval, and that approval may release the other request. Agents remain forbidden from manual merge, pre-arming, cancelling auto-merge or bypass. Fresh originating-account independent review, exact CI, the App own approval and all admission gates remain mandatory. Observed foreign or unknown auto-merge requests still reject. Coexisting unsolicited approvals never substitute for App admission evidence and are not themselves prohibited. Existing-approval reconciliation addresses lost responses, not the first-approval race. This limitation is separately accepted from Q16 receipt trust; no human technical-review gate or broader actor permission is added.",
-    "administrative_visibility": "The owner qualifies the complete bypass-actor policy with owner-visible reads during cutover; omitted full lists remain unknown, never assumed empty. Runtime uses the actual validated App writer token for GET-only effective-main/contributing-ruleset reads before approval and before native delivery, requiring complete active contributing coverage, current_user_can_bypass exactly never on every contributor, and unchanged App control evidence. CI_READ_TOKEN does not prove App-specific status. Trusted-main read-only qualification exercises the same check with its scoped App credential; each write independently rechecks its actual writer credential. These reads neither reveal other hidden actors nor atomically exclude later administrative drift. Existing visible actor checks, owner qualification, permission scopes and credential cleanup remain required."
+    "administrative_visibility": "The owner qualifies the complete bypass-actor policy with owner-visible reads during cutover; omitted full lists remain unknown, never assumed empty. Runtime uses the actual validated App writer token for GET-only effective-main/contributing-ruleset reads before approval and before native delivery, requiring complete active contributing coverage, current_user_can_bypass exactly never on every contributor, and unchanged App control evidence. CI_READ_TOKEN does not prove App-specific status. Trusted-main read-only qualification exercises the same check with its scoped App credential; each write independently rechecks its actual writer credential. These reads neither reveal other hidden actors nor atomically exclude later administrative drift. Existing visible actor checks, owner qualification, permission scopes and credential cleanup remain required.",
+    "api_read_evidence": {
+      "checked_at": "2026-11-17",
+      "source": "https://docs.github.com/en/rest/repos/rules",
+      "endpoints": [
+        "GET /repos/{owner}/{repo}/rules/branches/{branch}",
+        "GET /repos/{owner}/{repo}/rulesets",
+        "GET /repos/{owner}/{repo}/rulesets/{ruleset_id}"
+      ],
+      "permission": "All three documented GET endpoints accept App installation tokens with metadata:read. This is distinct from Administration write for ruleset creation/update.",
+      "observed_same_app": "App4217367 installation144433991 issued contents/pull_requests write plus metadata read, no Administration; a repository-scoped GET-only probe returned current_user_can_bypass never while omitting bypass_actors. This is evidence of API capability, not this canary post-cutover qualification.",
+      "limits": "Owner-visible complete actor proof and actual canary scoped current-main qualification remain required. No expanded credential permission is authorized or needed by this evidence."
+    },
+    "ci_review_trust": {
+      "accepted_authority": "Q07 accepts automatically reviewed CI/governance updates; Q11 requires same originating account; Q16 accepts operational local receipt provenance. No human technical-review or mandatory immutable CI-definition refresh gate is introduced.",
+      "app_evidence": "Trusted-main App verifies exact Actions producer, repository, workflow path, revision/base/head, latest run/attempt, successful required jobs and bound aggregate output. A candidate contract hash binds inputs; it does not independently attest semantic adequacy or actual full-test execution.",
+      "mandatory_content_review": "Fresh independent content review must examine workflows, dispatcher, inventory, test assertions and failure propagation. All assigned engine and delivery cases must actually execute with meaningful assertions in hosted CI. No-op lanes, omitted cases, invented measurements or weakened failures are review failures. Candidate CI is untrusted review subject.",
+      "limits": "Reviewer false negatives and same-privilege forgery remain possible under accepted operational trust. These limitations do not waive meaningful CI or permit fabricated passing evidence. Missing, failed, skipped or stale observed evidence still rejects."
+    }
   }
 }

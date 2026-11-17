@@ -32,6 +32,15 @@ establish trusted-main enrollment. Agents never merge manually, arm or cancel
 auto-merge, bypass controls or restart the retired PR controller. Missing review
 or admission holds delivery; the operator is not the technical reviewer.
 
+The App authenticates the exact CI execution and its reported evidence. The
+contract digest binds inputs; it does not independently attest that candidate CI
+code executed meaningful tests. Fresh independent review must examine the
+workflow, dispatcher, test inventory, assertions and failure handling. Every
+assigned case must actually run in hosted CI; no-op lanes, removed assertions,
+fabricated counts or weakened failures reject review. Automatic reviewed CI
+changes remain permitted. The accepted local-receipt trust model admits reviewer
+false negatives; it adds no blanket immutable-definition refresh gate.
+
 The owner proves the complete allowed bypass-actor configuration during initial
 admission. Runtime App credentials may redact that complete list; its visibility
 remains unknown. Before approval and again before native delivery, the validated
