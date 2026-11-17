@@ -15,7 +15,7 @@
       "credential_store": "keyring",
       "instructions_sha256": "7efd718dd897e06155b8e49eca37d18b15fb1e47610d9cf4b2d26e294a99e10b",
       "capture_adapter_sha256": "0e575b9d7b533d3f19e6dfa298f03d65bd9304b42b8176522c617aa1f8e4de26",
-      "creation_adapter_sha256": "fd2f04f6991aea4f16b9feca17be7f474ba7abae71cbb4399b6657d187be214f",
+      "creation_adapter_sha256": "e186189b24dc77ddb29bb462d1ad378f564df7c08264f49b8e10f138e6ce152a",
       "allowed_startup_notice_sha256": [
         "b2fc6975a5637afa2ac999a3260fc7980db0be97b0474c7a8a14c57e18d4a6e1",
         "de8c81bdbcbc27db4d16d6ea11b6463544d5351492a5b397d3d31af1fbc78ca3"
@@ -30,13 +30,14 @@
       "credential_store": "file",
       "instructions_sha256": "7efd718dd897e06155b8e49eca37d18b15fb1e47610d9cf4b2d26e294a99e10b",
       "capture_adapter_sha256": "0e575b9d7b533d3f19e6dfa298f03d65bd9304b42b8176522c617aa1f8e4de26",
-      "creation_adapter_sha256": "fd2f04f6991aea4f16b9feca17be7f474ba7abae71cbb4399b6657d187be214f",
+      "creation_adapter_sha256": "e186189b24dc77ddb29bb462d1ad378f564df7c08264f49b8e10f138e6ce152a",
       "allowed_startup_notice_sha256": [
         "b2fc6975a5637afa2ac999a3260fc7980db0be97b0474c7a8a14c57e18d4a6e1"
       ]
     }
   ],
   "governance": {
-    "accepted_delivery_boundary": "The operator accepted the documented concurrent-writer auto-merge race on 2026-11-17. App-only delivery is an authorization and operating rule, not atomic technical exclusion: another write-capable actor may arm native auto-merge after the last read and before App approval, and that approval may release the other request. Agents remain forbidden from manual merge, pre-arming, cancelling auto-merge or bypass. Fresh originating-account independent review, exact CI, the App own approval and all admission gates remain mandatory. Observed foreign or unknown auto-merge requests still reject. Coexisting unsolicited approvals never substitute for App admission evidence and are not themselves prohibited. Existing-approval reconciliation addresses lost responses, not the first-approval race. This limitation is separately accepted from Q16 receipt trust; no human technical-review gate or broader actor permission is added."
+    "accepted_delivery_boundary": "The operator accepted the documented concurrent-writer auto-merge race on 2026-11-17. App-only delivery is an authorization and operating rule, not atomic technical exclusion: another write-capable actor may arm native auto-merge after the last read and before App approval, and that approval may release the other request. Agents remain forbidden from manual merge, pre-arming, cancelling auto-merge or bypass. Fresh originating-account independent review, exact CI, the App own approval and all admission gates remain mandatory. Observed foreign or unknown auto-merge requests still reject. Coexisting unsolicited approvals never substitute for App admission evidence and are not themselves prohibited. Existing-approval reconciliation addresses lost responses, not the first-approval race. This limitation is separately accepted from Q16 receipt trust; no human technical-review gate or broader actor permission is added.",
+    "administrative_visibility": "The owner qualifies the complete bypass-actor policy with owner-visible reads during cutover; omitted full lists remain unknown, never assumed empty. Runtime uses the actual validated App writer token for GET-only effective-main/contributing-ruleset reads before approval and before native delivery, requiring complete active contributing coverage, current_user_can_bypass exactly never on every contributor, and unchanged App control evidence. CI_READ_TOKEN does not prove App-specific status. Trusted-main read-only qualification exercises the same check with its scoped App credential; each write independently rechecks its actual writer credential. These reads neither reveal other hidden actors nor atomically exclude later administrative drift. Existing visible actor checks, owner qualification, permission scopes and credential cleanup remain required."
   }
 }

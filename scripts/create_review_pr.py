@@ -20,6 +20,8 @@ REPOSITORY_ID = 1324068071
 OWNER_ID = 49759187
 PREFIX = '/repos/' + REPOSITORY
 ORIGIN_MARKER = '<!-- g1-pr-origin:v1 -->\n'
+REVIEW_MARKER = '<!-- g1-review-receipt:v1 -->\n'
+MAX_RECEIPT = 60000
 GH = '/opt/homebrew/bin/gh'
 LIMIT = 2 * 1024 * 1024
 
@@ -104,6 +106,36 @@ def validate_receipt(receipt, request, enrollment, now):
     require(receipt['report_sha256'] == review.digest(review.canonical(report)), 'report digest mismatch')
 
 
+def validate_policy(policy, request, enrollment, receipt):
+    """Reject a receipt the trusted App cannot admit before creating a PR."""
+    require(review.digest(policy) == request['policy_sha256'], 'trusted policy digest mismatch')
+    value = strict_json(policy)
+    require(isinstance(value, dict) and value.get('schema') == 'g1-review-enrollments/v1'
+            and type(value.get('repository_id')) is int and value['repository_id'] == REPOSITORY_ID
+            and value.get('repository_names') == list(NAME_PHASES)
+            and value.get('enabled') is True, 'trusted policy identity or enrollment disabled')
+    producers = value.get('producers')
+    require(isinstance(producers, list) and producers and all(isinstance(p, dict) for p in producers),
+            'trusted policy producers missing')
+    identifiers = [p.get('id') for p in producers]
+    require(all(isinstance(v, str) and v for v in identifiers)
+            and len(set(identifiers)) == len(identifiers), 'ambiguous trusted policy producer')
+    matches = [p for p in producers if p['id'] == enrollment['id']]
+    require(len(matches) == 1, 'unknown trusted policy producer')
+    producer = matches[0]
+    require(producer.get('enabled') is True and producer.get('github_user_id') == OWNER_ID
+            and producer.get('origin_account') == enrollment['origin_account'], 'trusted policy producer mismatch')
+    expected = {'cli_version': enrollment['cli_version'], 'credential_store': enrollment['credential_store'],
+                'instructions_sha256': review.digest(review.INSTRUCTIONS),
+                'capture_adapter_sha256': review.digest(Path(review.__file__).read_bytes()),
+                'creation_adapter_sha256': review.digest(Path(__file__).read_bytes())}
+    require(all(producer.get(k) == v for k, v in expected.items()), 'trusted policy adapter or runtime mismatch')
+    allowed = producer.get('allowed_startup_notice_sha256')
+    require(isinstance(allowed, list) and all(isinstance(n, str) and re.fullmatch('[0-9a-f]{64}', n) for n in allowed)
+            and all(n in allowed for n in receipt['runtime']['startup_notice_sha256']), 'trusted policy runtime notice mismatch')
+    require(len((REVIEW_MARKER + review.canonical(receipt)).encode()) <= MAX_RECEIPT, 'receipt exceeds bound')
+
+
 class Github:
     def call(self, method, path, payload=None):
         argv = [GH, 'api', '--hostname', 'github.com', '--method', method, path,
@@ -168,6 +200,7 @@ def create(repo, request, policy, enrollment, receipt, title, body, output, jour
     require(version == enrollment['cli_version'], 'unenrolled CLI version')
     payload = review.frozen_input(repo, request, policy)
     validate_receipt(receipt, request, enrollment, timestamp(review.utc()))
+    validate_policy(policy, request, enrollment, receipt)
     branch = review.git(repo, 'symbolic-ref', '--quiet', '--short', 'HEAD').decode().strip()
     require(branch and branch != 'main' and not any(c.isspace() for c in branch), 'delivery branch required')
     nonce, started = str(uuid.uuid4()), review.utc()

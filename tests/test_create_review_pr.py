@@ -77,9 +77,18 @@ class CreationTests(unittest.TestCase):
         self.enrollment = {'id': 'work-local', 'origin_account': 'work', 'email': 'owner@example.invalid',
                            'workspace': 'private-workspace', 'cli_version': 'codex-cli 0.148.0', 'credential_store': 'keyring',
                            'codex_home': str(Path(os.environ.get('CODEX_HOME', str(Path.home() / '.codex'))).resolve())}
+        self.producer = {'id': self.enrollment['id'], 'origin_account': 'work', 'enabled': True,
+                         'github_user_id': m.OWNER_ID, 'cli_version': self.enrollment['cli_version'],
+                         'credential_store': 'keyring', 'instructions_sha256': m.review.digest(m.review.INSTRUCTIONS),
+                         'capture_adapter_sha256': m.review.digest(Path(m.review.__file__).read_bytes()),
+                         'creation_adapter_sha256': m.review.digest(Path(m.__file__).read_bytes()),
+                         'allowed_startup_notice_sha256': []}
+        self.policy_value = {'schema': 'g1-review-enrollments/v1', 'repository_id': m.REPOSITORY_ID,
+                             'repository_names': list(m.NAME_PHASES), 'enabled': True, 'producers': [self.producer]}
+        self.policy = m.review.canonical(self.policy_value).encode()
         self.request = {'repository': m.REPOSITORY, 'repository_id': m.REPOSITORY_ID, 'head_sha': 'a' * 40,
                         'base_sha': 'b' * 40, 'merge_base_sha': 'c' * 40, 'diff_sha256': 'd' * 64,
-                        'policy_sha256': m.review.digest(b'policy'), 'origin_account': 'work'}
+                        'policy_sha256': m.review.digest(self.policy), 'origin_account': 'work'}
         report = {'verdict': 'pass', 'coverage': 'complete', 'summary': 'All supplied changed lines examined.', 'findings': [], 'unresolved_findings': []}
         self.receipt = {'schema': m.review.SCHEMA, 'capture_id': '11111111-1111-4111-8111-111111111111',
                         'trust_model': 'q16-operational-local', 'tuple': copy.deepcopy(self.request),
@@ -102,7 +111,7 @@ class CreationTests(unittest.TestCase):
         return result
 
     def create(self, **kwargs):
-        args = dict(repo=self.root, request=self.request, policy=b'policy', enrollment=self.enrollment,
+        args = dict(repo=self.root, request=self.request, policy=self.policy, enrollment=self.enrollment,
                     receipt=self.receipt, title='Reviewed change', body='Concrete behavior and validation.',
                     output=self.output, journal=self.journal, api=self.api)
         args.update(kwargs)
@@ -192,6 +201,53 @@ class CreationTests(unittest.TestCase):
             self.create()
         self.assert_no_origin()
         self.assertFalse(any(method == 'POST' and '/comments' in path for method, path, _ in self.api.calls))
+
+    def test_oversized_or_multibyte_review_refuses_before_any_api_or_journal(self):
+        for summary in ('x' * 60000, '\N{SNOWMAN}' * 22000):
+            self.receipt['review']['summary'] = summary
+            self.receipt['report_sha256'] = m.review.digest(m.review.canonical(self.receipt['review']))
+            with self.assertRaisesRegex(m.review.CaptureError, 'receipt exceeds bound'):
+                self.create()
+            self.assertEqual(self.api.calls, [])
+            self.assertFalse(self.output.exists())
+            self.assertFalse(self.journal.exists())
+
+    def test_trusted_policy_constraints_refuse_before_any_api_mutation(self):
+        changes = [lambda p: p.update(enabled=False), lambda p: p.update(repository_id=7),
+                   lambda p: p.update(repository_names=['other/repo']),
+                   lambda p: p['producers'].append(copy.deepcopy(p['producers'][0])),
+                   lambda p: p['producers'][0].update(enabled=False),
+                   lambda p: p['producers'][0].update(origin_account='personal'),
+                   lambda p: p['producers'][0].update(github_user_id=7),
+                   lambda p: p['producers'][0].update(cli_version='other'),
+                   lambda p: p['producers'][0].update(credential_store='file'),
+                   lambda p: p['producers'][0].update(instructions_sha256='f' * 64),
+                   lambda p: p['producers'][0].update(capture_adapter_sha256='f' * 64),
+                   lambda p: p['producers'][0].update(creation_adapter_sha256='f' * 64)]
+        for change in changes:
+            policy = copy.deepcopy(self.policy_value)
+            change(policy)
+            raw = m.review.canonical(policy).encode()
+            self.request['policy_sha256'] = m.review.digest(raw)
+            self.receipt['tuple'] = copy.deepcopy(self.request)
+            with self.subTest(policy=policy), self.assertRaises(m.review.CaptureError):
+                self.create(policy=raw)
+            self.assert_no_create()
+            self.assert_no_origin()
+            self.assertFalse(self.journal.exists())
+
+    def test_policy_specific_notices_and_duplicate_json_refuse_before_any_api(self):
+        self.receipt['runtime']['startup_notice_sha256'] = [m.review.digest(next(iter(m.review.STARTUP_NOTICES)))]
+        with self.assertRaisesRegex(m.review.CaptureError, 'policy runtime notice'):
+            self.create()
+        self.assertEqual(self.api.calls, [])
+        self.receipt['runtime']['startup_notice_sha256'] = []
+        raw = self.policy[:-1] + b',"enabled":true}'
+        self.request['policy_sha256'] = m.review.digest(raw)
+        self.receipt['tuple'] = copy.deepcopy(self.request)
+        with self.assertRaisesRegex(m.review.CaptureError, 'duplicate JSON key'):
+            self.create(policy=raw)
+        self.assertEqual(self.api.calls, [])
 
     def test_malformed_stale_wrong_binding_receipts(self):
         base = copy.deepcopy(self.receipt)
