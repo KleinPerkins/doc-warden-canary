@@ -9,7 +9,10 @@
     "event": "push",
     "status": "completed",
     "conclusion": "success",
-    "html_url": "https://github.com/KleinPerkins/doc-warden-canary/actions/runs/44157455928"
+    "html_url": "https://github.com/KleinPerkins/doc-warden-canary/actions/runs/44157455928",
+    "run_started_at": "2026-11-17T19:20:08Z",
+    "created_at": "2026-11-17T19:20:08Z",
+    "updated_at": "2026-11-17T19:20:54Z"
   },
   "jobs": [
     {
@@ -549,11 +552,70 @@
     ]
   },
   "prior_unchanged_source_review": {
-    "head": "9d40ee005233bc33ee45e7201f0e9f5452f442f9",
-    "PR": 2,
-    "receipt_comment": 6958016581,
-    "verdict": "pass",
-    "coverage": "complete",
-    "findings": []
+    "unedited_public_receipt": {
+      "capture_id": "a917aa03-49bb-478a-9833-cffe020caacf",
+      "completed_at": "2026-11-17T19:04:57.378659Z",
+      "instructions_sha256": "7efd718dd897e06155b8e49eca37d18b15fb1e47610d9cf4b2d26e294a99e10b",
+      "report_sha256": "566e56c02163cbcaa0987ef83b097645ac4864862e7c8ee6494032c62d9bf746",
+      "review": {
+        "coverage": "complete",
+        "findings": [],
+        "summary": "All supplied changed lines were examined against the trusted policy; no actionable correctness, security, or policy violations were identified.",
+        "unresolved_findings": [],
+        "verdict": "pass"
+      },
+      "reviewer_enrollment_id": "enrollment-24c0a5f2",
+      "reviewer_origin_account": "origin-7612de79",
+      "runtime": {
+        "cli_version": "codex-cli 0.148.0",
+        "credential_store": "keyring",
+        "event_stream_sha256": "355750b96c05c27bc1fd3277103b1d5adc7c9dac63de9490471e9e0396c93e9b",
+        "startup_notice_sha256": [
+          "de8c81bdbcbc27db4d16d6ea11b6463544d5351492a5b397d3d31af1fbc78ca3",
+          "b2fc6975a5637afa2ac999a3260fc7980db0be97b0474c7a8a14c57e18d4a6e1",
+          "de8c81bdbcbc27db4d16d6ea11b6463544d5351492a5b397d3d31af1fbc78ca3"
+        ],
+        "status": "completed",
+        "thread_id": "01a1eae4-dec0-7a32-a91a-ca146002f6d3",
+        "turn_id": null
+      },
+      "schema": "g1-local-review/v1",
+      "started_at": "2026-11-17T19:03:49.126558Z",
+      "trust_model": "q16-operational-local",
+      "tuple": {
+        "base_sha": "e35d30f9d6dd3b004d56c5744fe6b38102d6bc7a",
+        "diff_sha256": "2342c8a0ca0108ab1d3ebbb489aa49007e27575d03457a4164ac9047978fc8cc",
+        "head_sha": "9d40ee005233bc33ee45e7201f0e9f5452f442f9",
+        "merge_base_sha": "e35d30f9d6dd3b004d56c5744fe6b38102d6bc7a",
+        "origin_account": "origin-7612de79",
+        "policy_sha256": "41fe5aed4276279d4d94cd1637ba7f370152f12bdad2ce92b9ffba19ab8d2d9b",
+        "repository": "KleinPerkins/doc-warden-canary",
+        "repository_id": 1324068071
+      },
+      "workspace_binding": "owner-declared-enrollment"
+    },
+    "public_receipt_comment": 6958016581,
+    "reviewed_head_tree": "19f228454a8ef57ffaf3c2eeaa2e51d064ed09d8",
+    "merged_revision_tree": "19f228454a8ef57ffaf3c2eeaa2e51d064ed09d8",
+    "tree_equality_verified": true,
+    "owner_bootstrap_PR": 2,
+    "meaning": "The bootstrap squash has a new commit ID and exactly the reviewed source tree; this historical source review is not a receipt for a subsequent PR."
+  },
+  "CI_selection": {
+    "observed_at": "2026-11-17T19:38:09.335777+00:00",
+    "candidates": [
+      {
+        "id": 44157455928,
+        "run_attempt": 1,
+        "run_started_at": "2026-11-17T19:20:08Z",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "8c20bc10929cb6042bebee636b3ec7594ee4b048",
+        "event": "push"
+      }
+    ],
+    "selected_run_id": 44157455928,
+    "selection": "Unique latest run_started_at; all matching attempts completed at observation",
+    "historical_observation_only": true
   }
 }

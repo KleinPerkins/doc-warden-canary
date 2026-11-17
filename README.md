@@ -71,8 +71,10 @@ remain prohibited from manual merge, bypass or auto-merge manipulation.
 ## CI transition evidence — 17 November 2026
 
 The [recorded evidence](docs/runbooks/ci-readiness-20261117.json) contains the
-public run identities, original aggregate and case-count log lines, reviewed
+public run identities, the original aggregate log line, reviewed
 workflow/test inventory, App qualification output and owner-visible ruleset values.
+Shard logs do not retain individual case-count records; successful jobs and the
+validated aggregate are recorded without inventing those measurements.
 These historical results do not establish that any future head is qualified.
 
 The owner admitted the CI/App source through [PR #2](https://github.com/KleinPerkins/doc-warden-canary/pull/2).
