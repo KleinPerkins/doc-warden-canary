@@ -55,7 +55,8 @@
       "accepted_authority": "Q07 accepts automatically reviewed CI/governance updates; Q11 requires same originating account; Q16 accepts operational local receipt provenance. No human technical-review or mandatory immutable CI-definition refresh gate is introduced.",
       "app_evidence": "Trusted-main App verifies exact Actions producer, repository, workflow path, revision/base/head, latest run/attempt, successful required jobs and bound aggregate output. A candidate contract hash binds inputs; it does not independently attest semantic adequacy or actual full-test execution.",
       "mandatory_content_review": "Fresh independent content review must examine workflows, dispatcher, inventory, test assertions and failure propagation. All assigned engine and delivery cases must actually execute with meaningful assertions in hosted CI. No-op lanes, omitted cases, invented measurements or weakened failures are review failures. Candidate CI is untrusted review subject.",
-      "limits": "Reviewer false negatives and same-privilege forgery remain possible under accepted operational trust. These limitations do not waive meaningful CI or permit fabricated passing evidence. Missing, failed, skipped or stale observed evidence still rejects."
+      "limits": "Reviewer false negatives and same-privilege forgery remain possible under accepted operational trust. These limitations do not waive meaningful CI or permit fabricated passing evidence. Missing, failed, skipped or stale observed evidence still rejects.",
+      "latest_attempt": "CI run IDs are immutable creation identifiers, not cross-run attempt chronology. Select the unique latest run_started_at, which GitHub documents as resetting on re-run; reject any pending/running current attempt and missing/invalid/ambiguous timestamps. Exact selected run ID and attempt still bind the jobs, check suite and aggregate."
     }
   }
 }

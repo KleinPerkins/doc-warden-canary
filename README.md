@@ -38,7 +38,10 @@ code executed meaningful tests. Fresh independent review must examine the
 workflow, dispatcher, test inventory, assertions and failure handling. Every
 assigned case must actually run in hosted CI; no-op lanes, removed assertions,
 fabricated counts or weakened failures reject review. Automatic reviewed CI
-changes remain permitted. The accepted local-receipt trust model admits reviewer
+changes remain permitted. Across runs, the App selects the unique latest
+`run_started_at` (which resets on re-run), rejects pending/running attempts and
+unknown or ambiguous timing, and still binds the exact selected run and attempt.
+The accepted local-receipt trust model admits reviewer
 false negatives; it adds no blanket immutable-definition refresh gate.
 
 The owner proves the complete allowed bypass-actor configuration during initial
